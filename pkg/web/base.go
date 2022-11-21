@@ -3,6 +3,7 @@ package web
 import (
 	"github.com/jeffer-mendoza/go-common-lib/pkg/domain"
 	"github.com/jeffer-mendoza/go-common-lib/pkg/errors"
+	"github.com/jeffer-mendoza/go-common-lib/pkg/log"
 
 	"github.com/gin-gonic/gin"
 )
@@ -12,6 +13,7 @@ func ReturnInfo(ctx *gin.Context, payload interface{}, err error, statusCode int
 	var apiError errors.ApiError
 	var response domain.ApiResponse
 	if err != nil {
+		log.Err(err, "error", nil)
 		apiError = errors.GetAPIError(err)
 	} else {
 		response = domain.ApiResponse{

@@ -10,7 +10,6 @@ import (
 
 var (
 	Logger *logrus.Logger
-
 )
 
 const (
@@ -25,6 +24,7 @@ func init() { // nolint
 		Level:     logrus.InfoLevel,
 		Out:       os.Stdout,
 		Hooks:     make(logrus.LevelHooks),
+		Formatter: &logrus.JSONFormatter{},
 	}
 }
 
@@ -44,7 +44,8 @@ func Debug(message, tags map[string]string) {
 	Logger.WithFields(addFields(tags)).Debug(message)
 }
 
-func Err(message, tags map[string]string) {
+func Err(err error, message string, tags map[string]string) {
+	message = fmt.Sprintf("%s - PANIC: %v ", message, err)
 	Logger.WithFields(addFields(tags)).Error(message)
 }
 
